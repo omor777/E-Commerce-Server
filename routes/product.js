@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/", authenticate, getAllProductController);
 router.post("/", authenticate, createProductController);
-router.patch("/", authenticate, updateProductController);
+router.patch("/:productId", authenticate, updateProductController);
 router.delete("/", () => {});
 
 export default router;

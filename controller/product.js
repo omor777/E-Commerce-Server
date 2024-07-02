@@ -1,4 +1,5 @@
 import Product from "../models/product.models.js";
+import error from "../utils/error.js";
 
 const getAllProductController = async (req, res, next) => {
   try {
@@ -64,7 +65,45 @@ const createProductController = async (req, res, next) => {
 };
 
 const updateProductController = async (req, res, next) => {
+  const { name, description, price, stock, images } = req.body;
+  const { productId } = req.params;
+
   try {
+    const updates = {};
+
+    if (name && name.trim() !== "") {
+      updates.name = name;
+    }
+    if (description && description.trim() !== "") {
+      updates.description = description;
+    }
+    if (price !== undefined && price > 0) {
+      updates.price = price;
+    }
+    if (stock !== undefined && stock >= 0) {
+      updates.stock = stock;
+    }
+    if (Array.isArray(images) && images.length > 0) {
+      updates.images = images;
+    }
+
+    const updateProduct = await Product.findOneAndUpdate(
+      { _id: productId },
+      updates,
+      {
+        new: true,
+      }
+    );
+
+    if (!updateProduct) {
+      throw error("Product not found", 404);
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Product updated successfully",
+      product: updateProduct,
+    });
   } catch (e) {
     next(e);
   }

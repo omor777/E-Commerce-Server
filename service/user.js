@@ -6,8 +6,9 @@ const createUser = async ({ name, email, password, address }) => {
 };
 
 const findUserByProperty = (key, value) => {
+  
   if (key === "_id") {
-    return User.findById(id);
+    return User.findById(value);
   }
   return User.findOne({ [key]: value });
 };
