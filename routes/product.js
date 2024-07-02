@@ -1,12 +1,15 @@
-import express from 'express'
-import { createProductController } from '../controller/product.js'
-import { authenticate } from '../middleware/authenticate.js'
-const router = express.Router()
+import express from "express";
+import {
+  createProductController,
+  getAllProductController,
+  updateProductController,
+} from "../controller/product.js";
+import { authenticate } from "../middleware/authenticate.js";
+const router = express.Router();
 
+router.get("/", authenticate, getAllProductController);
+router.post("/", authenticate, createProductController);
+router.patch("/", authenticate, updateProductController);
+router.delete("/", () => {});
 
-router.get('/',()=>{})
-router.post('/',authenticate,createProductController)
-router.patch('/',()=>{})
-router.delete('/',()=>{})
-
-export default router
+export default router;

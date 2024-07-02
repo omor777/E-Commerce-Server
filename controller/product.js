@@ -1,5 +1,30 @@
 import Product from "../models/product.models.js";
 
+const getAllProductController = async (req, res, next) => {
+  try {
+    // pagination parameters
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 10;
+    const skip = (page - 1) * limit;
+
+    const price = req.query.price ? { price: { $lte: req.query.price } } : {};
+
+    const allProducts = await Product.find(price).skip(skip).limit(limit);
+    const totalProducts = await Product.countDocuments(price);
+
+    res.status(200).json({
+      success: true,
+      count: allProducts.length,
+      total: totalProducts,
+      page,
+      pages: Math.ceil(totalProducts / limit),
+      products: allProducts,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const createProductController = async (req, res, next) => {
   try {
     const { name, description, price, stock, images } = req.body;
@@ -38,4 +63,15 @@ const createProductController = async (req, res, next) => {
   }
 };
 
-export { createProductController };
+const updateProductController = async (req, res, next) => {
+  try {
+  } catch (e) {
+    next(e);
+  }
+};
+
+export {
+  createProductController,
+  getAllProductController,
+  updateProductController,
+};
