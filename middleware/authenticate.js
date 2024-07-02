@@ -14,13 +14,13 @@ const authenticate = async (req, res, next) => {
     token = token?.split(" ")[1];
 
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    // const user = await User.findById(decoded._id);
+    const user = await User.findById(decoded._id);
 
-    // if (!user) {
-    //   throw error("Unauthorized Access", 401);
-    // }
-    // req.user = user;
-    // next();
+    if (!user) {
+      throw error("Unauthorized Access", 401);
+    }
+    req.user = user;
+    next();
   } catch (e) {
     console.log('auth');
     return res.status(401).json({ message: "Unauthorized Access" });

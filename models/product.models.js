@@ -21,6 +21,7 @@ const productSchema = new Schema(
     },
     images: {
       type: [String],
+      required: true,
     },
     rating: {
       type: Number,
