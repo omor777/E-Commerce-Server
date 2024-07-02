@@ -1,5 +1,6 @@
 import express from "express";
 import connectDb from "./db.js";
+import { authenticate } from "./middleware/authenticate.js";
 import routes from "./routes/index.js";
 const app = express();
 
@@ -13,11 +14,18 @@ app.get("/", (_req, res) => {
   res.json({ success: true });
 });
 
+app.get("/api/v1/private", authenticate, (req, res) => {
+  res.json({ message: "private route" });
+});
+app.get("/api/v1/public", (_req, res) => {
+  res.json({ message: "public route" });
+});
+
 app.use((err, _req, res, _next) => {
-  console.log(err);
+  console.log(err, "global------------------->");
   const message = err.message ? err.message : "Server Error Occurred";
   const status = err.status ? err.status : 500;
-  res.status(status).json({ message });
+  return res.status(status).json({ message });
 });
 
 connectDb("mongodb://localhost:27017/e-commerce-db")
