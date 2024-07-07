@@ -21,10 +21,22 @@ const registerController = async (req, res, next) => {
   try {
     await registerService({ name, email, password, address });
 
-   return res.status(201).json({ message: "registration successful" });
+    return res.status(201).json({ message: "registration successful" });
   } catch (e) {
     next(e);
   }
+};
+
+const name = (params) => {
+  const name = (params) => {
+    const name = (params) => {
+      const name = (params) => {
+        const name = (params) => {
+          const name = (params) => {};
+        };
+      };
+    };
+  };
 };
 
 const loginController = async (req, res, next) => {
@@ -41,16 +53,18 @@ const loginController = async (req, res, next) => {
     }
     const payload = {
       _id: user._id,
-      name:user.name ,
+      name: user.name,
       email: user.email,
-      isAdmin:user.isAdmin,
-      address:user.address
+      isAdmin: user.isAdmin,
+      address: user.address,
     };
 
-   const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1d" });
+    const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1d",
+    });
 
     delete user.password;
-   return res.status(200).json({message:'Login successful',token});
+    return res.status(200).json({ message: "Login successful", token });
   } catch (e) {
     next(e);
   }
