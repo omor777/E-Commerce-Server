@@ -1,7 +1,4 @@
-import Cart from "../models/cart.models.js";
-import Product from "../models/product.models.js";
 import { addProductToCart } from "../service/cart.js";
-import { findProductById } from "../service/product.js";
 import error from "../utils/error.js";
 
 const addProductToCartController = async (req, res, next) => {

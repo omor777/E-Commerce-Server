@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const orderSchema = new Schema(
   {
@@ -35,29 +35,33 @@ const orderSchema = new Schema(
 
     paymentMethod: {
       type: String,
-      required: true,
+      // required: true,
     },
     paymentResult: {
       id: { type: String },
-      status: { type: String },
+      status: { type: String, default: "PENDING" },
       update_time: { type: String },
       email_address: { type: String },
     },
     itemsPrice: {
       type: Number,
       required: true,
+      default: 0.0,
     },
     taxPrice: {
       type: Number,
       required: true,
+      default: 0.0,
     },
     shippingPrice: {
       type: Number,
       required: true,
+      default: 0.0,
     },
     totalPrice: {
       type: Number,
       required: true,
+      default: 0.0,
     },
     isPaid: {
       type: Boolean,
@@ -78,3 +82,7 @@ const orderSchema = new Schema(
   },
   { timestamps: true }
 );
+
+const Order = model("Order", orderSchema);
+
+export default Order;

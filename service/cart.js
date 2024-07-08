@@ -1,3 +1,4 @@
+import { authenticate } from "../middleware/authenticate.js";
 import Cart from "../models/cart.models.js";
 import { findProductById } from "./product.js";
 

@@ -7,10 +7,13 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(express.json());
+app.use(express.urlencoded());
 
 app.use(routes);
 
-app.get("/", (_req, res) => {
+app.get("/", (req, res) => {
+  
+  console.log(req.body);
   res.json({ success: true });
 });
 
