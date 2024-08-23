@@ -12,6 +12,12 @@ const userSchema = new Schema(
       unique: true,
       lowercase: true,
     },
+    mobile: {
+      type: String,
+    },
+    gender: {
+      type: String,
+    },
     password: {
       type: String,
       required: true,
@@ -24,6 +30,11 @@ const userSchema = new Schema(
     },
     address: {
       type: String,
+    },
+    profile: {
+      type: String,
+      default:
+        "https://img.lovepik.com/png/20231031/User-avatar-placeholder-Placeholder-the-internet-Ring_430100_wh860.png",
     },
   },
   { timestamps: true }

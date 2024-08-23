@@ -7,7 +7,7 @@ import error from "../utils/error.js";
 dotenv.config();
 
 const registerController = async (req, res, next) => {
-  const { name, email, password, address } = req.body;
+  const { name, email, password, address, mobile, gender } = req.body;
   if (!name) {
     res.status(400).json({ message: "name is required" });
   }
@@ -17,9 +17,12 @@ const registerController = async (req, res, next) => {
   if (!password) {
     res.status(400).json({ message: "password is required" });
   }
+  if (!mobile) {
+    return res.status(400).json({ message: "Mobile number is required" });
+  }
 
   try {
-    await registerService({ name, email, password, address });
+    await registerService({ name, email, password, address, mobile, gender });
 
     return res.status(201).json({ message: "registration successful" });
   } catch (e) {
@@ -27,20 +30,9 @@ const registerController = async (req, res, next) => {
   }
 };
 
-const name = (params) => {
-  const name = (params) => {
-    const name = (params) => {
-      const name = (params) => {
-        const name = (params) => {
-          const name = (params) => {};
-        };
-      };
-    };
-  };
-};
-
 const loginController = async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(email,password);
 
   try {
     const user = await findUserByProperty("email", email).lean();
@@ -64,7 +56,9 @@ const loginController = async (req, res, next) => {
     });
 
     delete user.password;
-    return res.status(200).json({ message: "Login successful", token });
+    return res
+      .status(200)
+      .json({ message: "Login successful", token, data: user });
   } catch (e) {
     next(e);
   }

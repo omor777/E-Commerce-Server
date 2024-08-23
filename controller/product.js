@@ -28,7 +28,16 @@ const getAllProductController = async (req, res, next) => {
 
 const createProductController = async (req, res, next) => {
   try {
-    const { name, description, price, stock, images } = req.body;
+    const {
+      name,
+      description,
+      price,
+      stock,
+      image,
+      featured = false,
+      on_sale = false,
+      category,
+    } = req.body;
 
     if (!name || !name.trim()) {
       return res.status(400).json({ error: "Name is required" });
@@ -44,8 +53,11 @@ const createProductController = async (req, res, next) => {
         .status(400)
         .json({ error: "Stock must be greater than or equal to 0" });
     }
-    if (!Array.isArray(images) || images.length === 0) {
+    if (!image) {
       return res.status(400).json({ error: "At least one image is required" });
+    }
+    if (!category) {
+      return res.status(400).json({ error: "Category is required" });
     }
 
     const product = new Product({
@@ -53,8 +65,14 @@ const createProductController = async (req, res, next) => {
       description,
       price,
       stock,
-      images,
+      image,
+      featured,
+      on_sale,
+      category,
+      regular_price: price,
     });
+
+    console.log(product);
 
     await product.save();
 

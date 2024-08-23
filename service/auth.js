@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { createUser, findUserByProperty } from "./user.js";
 import error from "../utils/error.js";
-const registerService = async ({ name, email, password, address }) => {
+const registerService = async ({ name, email, password, address,mobile,gender }) => {
   const user = await findUserByProperty("email", email);
 
   if (user) {
@@ -10,7 +10,7 @@ const registerService = async ({ name, email, password, address }) => {
 
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
-  return createUser({ name, email, password: hash, address });
+  return createUser({ name, email, password: hash, address,mobile,gender });
 };
 
 export { registerService };

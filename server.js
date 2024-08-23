@@ -1,5 +1,6 @@
 import express from "express";
 import connectDb from "./db.js";
+import cors from "cors";
 import { authenticate } from "./middleware/authenticate.js";
 import routes from "./routes/index.js";
 const app = express();
@@ -7,12 +8,11 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(cors());
 
 app.use(routes);
 
 app.get("/", (req, res) => {
-  
   console.log(req.body);
   res.json({ success: true });
 });

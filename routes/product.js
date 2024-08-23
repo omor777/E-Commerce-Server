@@ -8,7 +8,7 @@ import { authenticate } from "../middleware/authenticate.js";
 const router = express.Router();
 
 router.get("/", authenticate, getAllProductController);
-router.post("/", authenticate, createProductController);
+router.post("/", createProductController);
 router.patch("/:productId", authenticate, updateProductController);
 router.delete("/", () => {});
 
